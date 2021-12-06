@@ -25,4 +25,3 @@ const messagesFromReactAppListener = (
 
 chrome.runtime.onMessage.addListener(messagesFromReactAppListener);
 chrome.runtime.onStartup.addListener(() => console.log(document.title));
-setInterval(() => {}, 1000);
