@@ -1,19 +1,28 @@
-import { DOMMessage, DOMMessageResponse } from '../types';
+import { DOMMessage, DOMMessageResponse } from "../types";
 
-const messagesFromReactAppListener = (msg: DOMMessage, sender: chrome.runtime.MessageSender, sendResponse: (response: DOMMessageResponse) => void) => {
-  console.log('[content.js]. Message received', msg);
-
+const messagesFromReactAppListener = (
+  _: DOMMessage,
+  sender: chrome.runtime.MessageSender,
+  sendResponse: (response: DOMMessageResponse) => void
+) => {
   const response: DOMMessageResponse = {
-    title: document.title,
-    headlines: Array.from(document.getElementsByTagName<"h1">("h1")).map(h1 => h1.innerText)
+    headlines: Array.from(document.getElementsByTagName<"a">("a")).map((a) => {
+      const string = a.href.toString();
+      if (
+        string.includes("https://myjobstreet.jobstreet.com.my") ||
+        string.includes("http://myjobstreet.jobstreet.com.my")
+      ) {
+        return a.href;
+      }
+    }),
   };
-
-  console.log('[content.js]. Message response', response);
-
-  sendResponse(response)
-}
+  sendResponse(response);
+};
 
 /**
  * Fired when a message is sent from either an extension process or a content script.
  */
+
 chrome.runtime.onMessage.addListener(messagesFromReactAppListener);
+chrome.runtime.onStartup.addListener(() => console.log(document.title));
+setInterval(() => {}, 1000);
