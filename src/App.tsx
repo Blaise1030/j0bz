@@ -1,6 +1,7 @@
 import React from "react";
 import "./App.css";
 import { DOMMessage, DOMMessageResponse } from "./types";
+import { ChakraProvider } from "@chakra-ui/react";
 
 function App() {
   const [headlines, setHeadlines] = React.useState<string[]>([]);
@@ -27,7 +28,11 @@ function App() {
     }, 1000);
   }, []);
 
-  return <div className="App"></div>;
+  return (
+    <ChakraProvider>
+      <div className="App" />
+    </ChakraProvider>
+  );
 }
 
 export default App;
