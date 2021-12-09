@@ -169,7 +169,7 @@ const EducationExperienceView = ({
         w="100%"
       >
         <Heading fontSize="lg" fontWeight="medium" lineHeight="6">
-          Experiences
+          Education Experiences
         </Heading>
         <Button
           onClick={onAddExperienceClick}
