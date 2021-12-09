@@ -95,12 +95,7 @@ const WorkExperienceForm = ({
         title={"Company Name"}
         type={"text"}
       />
-      <TextInput
-        onChange={(change) => updateField("location", change)}
-        value={value.location}
-        title={"Location"}
-        type={"text"}
-      />
+
       <TextInput
         onChange={(change) => updateField("startDate", change)}
         value={value.startDate}
@@ -112,6 +107,12 @@ const WorkExperienceForm = ({
         value={value.endDate}
         title={"End date"}
         type={"date"}
+      />
+      <TextInput
+        onChange={(change) => updateField("location", change)}
+        value={value.location}
+        title={"Location"}
+        type={"text"}
       />
       <IndustryDropdown
         onSelect={(newIndustry: string) => updateField("industry", newIndustry)}
@@ -198,23 +199,30 @@ const IndustryDropdown = ({
     "Transportation",
   ];
   return (
-    // Returns a list of industries
-    <Select
-      as={GridItem}
-      colSpan={[6, 3]}
-      name="industry"
-      id="industry"
-      placeholder="Select industry"
-      onChange={(event) => {
-        console.log(event.target.value);
-        onSelect(event.target.value);
-      }}
-      value={value?.length === 0 ? industries[0] : value}
-    >
-      {industries.map((industry: string) => (
-        <option key={industry}>{industry}</option>
-      ))}
-    </Select>
+    <FormControl as={GridItem} colSpan={[6, 3]}>
+      {/* First Name Input */}
+      <FormLabel
+        htmlFor="first_name"
+        fontSize="sm"
+        fontWeight="md"
+        color={useColorModeValue("gray.700", "gray.50")}
+      >
+        {"Industry"}
+      </FormLabel>
+
+      {/* Given name Input */}
+      <Select
+        value={value?.length === 0 ? industries[0] : value}
+        onChange={(event) => onSelect(event.target.value)}
+        placeholder="Select industry"
+        name="industry"
+        id="industry"
+      >
+        {industries.map((industry: string) => (
+          <option key={industry}>{industry}</option>
+        ))}
+      </Select>
+    </FormControl>
   );
 };
 

@@ -17,7 +17,7 @@ function App() {
   const [section, setSection] = useState(1);
   const [basicInformation, setBasicInformation] = useState({});
   const [workExperience, setWorkExperience] = useState<any>([]);
-  const isDev = false;
+  const isDev = true;
   useEffect(() => {
     // run on every 1 s
     setInterval(() => {
@@ -45,7 +45,6 @@ function App() {
       localStorage.setItem(category, JSON.stringify(toStore));
     };
     const saveIntoChromeStorage = (category: string, toStore: object) => {
-      console.log("this is stored", { [category]: toStore });
       chrome.storage.sync.set({ [category]: toStore });
     };
     switch (section) {
@@ -77,10 +76,18 @@ function App() {
         setBasicInformation(
           isDev ? storedState : storedState.personalInformation
         );
-      else
+      else {
+        const isEmpty =
+          Object.keys(storedState).length === 0 &&
+          storedState.constructor === Object;
         setWorkExperience(
-          isDev ? storedState : storedState.workExperience ?? []
+          isDev
+            ? isEmpty
+              ? []
+              : storedState
+            : storedState.workExperience ?? []
         );
+      }
     };
 
     switch (section) {
@@ -111,20 +118,20 @@ function App() {
               Save this thing
             </Button>
           </HStack>
-          {section == 1 && (
+          {section === 1 && (
             <PersonalInformation
               currentState={basicInformation}
               setState={setBasicInformation}
             />
           )}
-          {section == 2 && (
+          {section === 2 && (
             <WorkExperienceForm
               experience={workExperience}
               setExperience={setWorkExperience}
             />
           )}
           <Center width="100%">
-            {section != 1 && (
+            {section !== 1 && (
               <Button
                 colorScheme="teal"
                 onClick={() => setSection(section - 1)}
