@@ -16,12 +16,14 @@ import {
 import { Button } from "@chakra-ui/react";
 import WorkExperienceForm from "./Components/WorkExperienceForm";
 import PersonalInformation from "./Components/PersonalInformation";
+import EducationExperienceForm from "./Components/EducationExperienceForm";
 
 function App() {
   const [headlines, setHeadlines] = React.useState<string[]>([]);
   const [section, setSection] = useState(1);
   const [basicInformation, setBasicInformation] = useState({});
   const [workExperience, setWorkExperience] = useState<any>([]);
+  const [educationExperience, setEducationExperience] = useState<any>([]);
   const isDev = true;
   useEffect(() => {
     // run on every 1 s
@@ -63,6 +65,11 @@ function App() {
           ? saveIntoLocalStorage("workExperience", workExperience)
           : saveIntoChromeStorage("workExperience", workExperience);
         break;
+      case 3:
+        isDev
+          ? saveIntoLocalStorage("educationExperience", educationExperience)
+          : saveIntoChromeStorage("educationExperience", educationExperience);
+          break;
       default:
         break;
     }
@@ -81,7 +88,7 @@ function App() {
         setBasicInformation(
           isDev ? storedState : storedState.personalInformation
         );
-      else {
+      else if (category === "workExperience") {
         const isEmpty =
           Object.keys(storedState).length === 0 &&
           storedState.constructor === Object;
@@ -92,6 +99,17 @@ function App() {
               : storedState
             : storedState.workExperience ?? []
         );
+      } else {
+        const isEmpty =
+          Object.keys(storedState).length === 0 &&
+          storedState.constructor === Object;
+        setEducationExperience(
+          isDev
+            ? isEmpty
+              ? []
+              : storedState
+            : storedState.educationExperience ?? []
+        );
       }
     };
 
@@ -101,6 +119,9 @@ function App() {
         break;
       case 2:
         getFromLocalStorage("workExperience");
+        break;
+      case 3:
+        getFromLocalStorage("educationExperience");
         break;
       default:
         break;
@@ -132,6 +153,7 @@ function App() {
             <TabList paddingLeft={5}>
               <Tab>Tab 1</Tab>
               <Tab>Tab 2</Tab>
+              <Tab>Tab 3</Tab>
             </TabList>
             <TabPanels>
               <TabPanel>
@@ -144,6 +166,12 @@ function App() {
                 <WorkExperienceForm
                   experience={workExperience}
                   setExperience={setWorkExperience}
+                />
+              </TabPanel>
+              <TabPanel>
+                <EducationExperienceForm
+                  experience={educationExperience}
+                  setExperience={setEducationExperience}
                 />
               </TabPanel>
             </TabPanels>

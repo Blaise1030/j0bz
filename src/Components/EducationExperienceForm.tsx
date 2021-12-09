@@ -19,7 +19,7 @@ import { SmallAddIcon, ChevronDownIcon } from "@chakra-ui/icons";
 export type EducationExperience = {
   id: number;
   placeholder: string;
-  university: string;
+  institution: string;
   location: string;
   startDate: string;
   endDate: string;
@@ -100,8 +100,8 @@ const EducationExperienceForm = ({
       />
       <TextInput
         onChange={(change) => updateField("university", change)}
-        value={value.university}
-        title={"University"}
+        value={value.institution}
+        title={"Institution"}
         type={"text"}
       />
 
@@ -145,7 +145,7 @@ const EducationExperienceView = ({
       {
         id: Date.now(),
         placeholder: "",
-        university: "",
+        institution: "",
         location: "",
         startDate: "",
         endDate: "",
@@ -214,17 +214,41 @@ const EducationDropdown = ({
   ];
   return (
     // Returns a list of education
-    <Select
-      name="education"
-      id="education"
-      placeholder="Select education"
-      onChange={(event) => onSelect(event.target.value)}
-      value={value.length === 0 ? education[0] : value}
-    >
-      {education.map((education: string) => (
-        <option key={education}>{education}</option>
-      ))}
-    </Select>
+    // <Select
+    //   name="education"
+    //   id="education"
+    //   placeholder="Select education"
+    //   onChange={(event) => onSelect(event.target.value)}
+    //   value={value.length === 0 ? education[0] : value}
+    // >
+    //   {education.map((education: string) => (
+    //     <option key={education}>{education}</option>
+    //   ))}
+    // </Select>
+    <FormControl as={GridItem} colSpan={[6, 3]}>
+      {/* First Name Input */}
+      <FormLabel
+        htmlFor="first_name"
+        fontSize="sm"
+        fontWeight="md"
+        color={useColorModeValue("gray.700", "gray.50")}
+      >
+        {"Education Level"}
+      </FormLabel>
+
+      {/* Given name Input */}
+      <Select
+        value={value?.length === 0 ? education[0] : value}
+        onChange={(event) => onSelect(event.target.value)}
+        placeholder="Select Education Level"
+        name="education"
+        id="education"
+      >
+        {education.map((education: string) => (
+          <option key={education}>{education}</option>
+        ))}
+      </Select>
+    </FormControl>
   );
 };
 
