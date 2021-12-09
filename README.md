@@ -2,12 +2,13 @@
 
 Welcome to our one-stop extension platform where Job seekers can view all of their job applications under one roof.
 
-The pitching video can be found [here](https://youtu.be/uDVtyH4h1ks).
+To know about our idea for Jobz, you may watch the video [here](https://youtu.be/uDVtyH4h1ks).<br>
+The video explaining our MVP can be found [here](https://youtu.be/z62SspQopKc).
 
 <br>
 
 ## Description
-As Job seekers find it difficult to keep track of their job applications, many often find themselves missing out in a lot of opportunities due to difficulty in managing their job applications. As we ara well aware on the fact that being able to secure the job is something crucial especially in pandemic times, the idea of Jobz came about.
+As Job seekers find it difficult to keep track of their job applications, many often find themselves missing out in a lot of opportunities due to difficulty in managing their job applications. As we are well aware on the fact that being able to secure the job is something crucial especially in pandemic times, the idea of Jobz came about.
 
 <br>
 
@@ -40,23 +41,23 @@ As Job seekers find it difficult to keep track of their job applications, many o
 
 ## Vision
 
-We visionize Jobz to be the ultimate tool to match the right people to the right company. In order to fullfill this goal, we planned to introduce job application insights and job application recommendations based on the user's previous application data in the platform through Machine Learning. We would also want to benefit the other side of the relationship - recruiters - as a whole with talent recommendation system through Machine Learning. 
+We strongly believe in the mission to connect awesome people with amazing companies which empowers both parties to achieve greater heights together.
 
 
 <br>
 
 ## Future Outlook
 
-We hope to integrate
+In order to fullfill this goal, we planned to introduce job application insights and job application recommendations based on the user's previous application data in the platform through Machine Learning. We would also want to benefit the other side of the relationship - recruiters - as a whole with talent recommendation system through Machine Learning. 
 
+**Planned Features**
 - One-stop Site for recruiters to manage application
 - Employee reviews
 - Portfolio feature
 
-Manage full recruitment process (interviews, offers-signing)
-Helps companies manage applications effectively with our services. 
-Recommending talents to a suitable company. 
-We are the broker and we charge brokerage fee.
+- Manage full recruitment process (interviews, offers-signing)
+- Help companies manage applications effectively with our services. 
+- Recommending talents to a suitable company. 
 
 <br>
 
