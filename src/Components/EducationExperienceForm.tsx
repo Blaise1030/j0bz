@@ -17,7 +17,7 @@ import { SmallAddIcon } from "@chakra-ui/icons";
 // Declare Work Experience type
 export type EducationExperience = {
   id: number;
-  placeholder: string;
+  field: string;
   institution: string;
   location: string;
   startDate: string;
@@ -92,13 +92,13 @@ const EducationExperienceForm = ({
       p={3}
     >
       <TextInput
-        onChange={(change) => updateField("placeholder", change)}
-        value={value.placeholder}
-        title={"Placeholder"}
+        onChange={(change) => updateField("field", change)}
+        value={value.field}
+        title={"Field of Study"}
         type={"text"}
       />
       <TextInput
-        onChange={(change) => updateField("university", change)}
+        onChange={(change) => updateField("institution", change)}
         value={value.institution}
         title={"Institution"}
         type={"text"}
@@ -143,7 +143,7 @@ const EducationExperienceView = ({
     setExperience([
       {
         id: Date.now(),
-        placeholder: "",
+        field: "",
         institution: "",
         location: "",
         startDate: "",
@@ -216,7 +216,7 @@ const EducationDropdown = ({
     // <Select
     //   name="education"
     //   id="education"
-    //   placeholder="Select education"
+    //   field="Select education"
     //   onChange={(event) => onSelect(event.target.value)}
     //   value={value.length === 0 ? education[0] : value}
     // >
@@ -239,7 +239,7 @@ const EducationDropdown = ({
       <Select
         value={value?.length === 0 ? education[0] : value}
         onChange={(event) => onSelect(event.target.value)}
-        placeholder="Select Education Level"
+        field="Select Education Level"
         name="education"
         id="education"
       >
