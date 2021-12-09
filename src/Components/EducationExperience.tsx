@@ -16,14 +16,14 @@ import { SmallAddIcon, ChevronDownIcon } from "@chakra-ui/icons";
 // ----------------------------------------------------------------------------------------------------------------------
 
 // Declare Work Experience type
-export type WorkExperience = {
+export type EducationExperience = {
   id: number;
-  jobTitle: string;
-  companyName: string;
+  placeholder: string;
+  university: string;
   location: string;
   startDate: string;
   endDate: string;
-  industry: string;
+  course: string;
 };
 
 // Form UI which includes all text based input components
@@ -72,12 +72,12 @@ const TextInput = ({
   );
 };
 
-const WorkExperienceForm = ({
+const EducationExperienceForm = ({
   updateStore,
   value,
 }: {
-  updateStore: (a: WorkExperience) => void;
-  value: WorkExperience;
+  updateStore: (a: EducationExperience) => void;
+  value: EducationExperience;
 }) => {
   const updateField = (key: string, newValue: string) => {
     updateStore({ ...value, [key]: newValue });
@@ -93,15 +93,15 @@ const WorkExperienceForm = ({
       p={3}
     >
       <TextInput
-        onChange={(change) => updateField("jobTitle", change)}
-        value={value.jobTitle}
-        title={"Job Title"}
+        onChange={(change) => updateField("placeholder", change)}
+        value={value.placeholder}
+        title={"Placeholder"}
         type={"text"}
       />
       <TextInput
-        onChange={(change) => updateField("companyName", change)}
-        value={value.companyName}
-        title={"Company Name"}
+        onChange={(change) => updateField("university", change)}
+        value={value.university}
+        title={"University"}
         type={"text"}
       />
 
@@ -123,39 +123,39 @@ const WorkExperienceForm = ({
         title={"Location"}
         type={"text"}
       />
-      <IndustryDropdown
-        onSelect={(newIndustry: string) => updateField("industry", newIndustry)}
-        value={value.industry}
+      <EducationDropdown
+        onSelect={(newCourse: string) => updateField("course", newCourse)}
+        value={value.course}
       />
     </SimpleGrid>
   );
 };
 
 // Work Experience View Handler for its UI dat
-const WorkExperienceView = ({
+const EducationExperienceView = ({
   experience,
   setExperience,
 }: {
-  experience: WorkExperience[];
-  setExperience: (n: WorkExperience[]) => void;
+  experience: EducationExperience[];
+  setExperience: (n: EducationExperience[]) => void;
 }) => {
   // Event Handler that handles event when user adds an experience
   const onAddExperienceClick = () =>
     setExperience([
       {
         id: Date.now(),
-        jobTitle: "",
-        companyName: "",
+        placeholder: "",
+        university: "",
         location: "",
         startDate: "",
         endDate: "",
-        industry: "",
+        course: "",
       },
       ...experience,
     ]);
 
   // Event Handler that handles event to set the experience
-  const onSetExperience = (newObject: WorkExperience) =>
+  const onSetExperience = (newObject: EducationExperience) =>
     setExperience(
       experience?.map((e) => (e.id === newObject.id ? newObject : e))
     );
@@ -183,7 +183,7 @@ const WorkExperienceView = ({
       </HStack>
 
       {experience?.map((value, index) => (
-        <WorkExperienceForm
+        <EducationExperienceForm
           updateStore={onSetExperience}
           key={index}
           value={value}
@@ -193,62 +193,39 @@ const WorkExperienceView = ({
   );
 };
 
-// Industry Dropdown Function
-const IndustryDropdown = ({
+// Education Dropdown Function
+const EducationDropdown = ({
   onSelect,
   value,
 }: {
   onSelect: (e: any) => void;
-  value?: string;
+  value: string;
 }) => {
-  // List of Industries (Hard Coded)
-  const industries = [
-    "Advertising & Marketing",
-    "Aerospace",
-    "Agriculture",
-    "Computer & technology",
-    "Construction",
-    "Education",
-    "Energy",
-    "Entertainment",
-    "Fashion",
-    "Finance & economic",
-    "Food & beverage",
-    "Health",
-    "Hospitality",
-    "Manufacturing",
-    "Media & News",
-    "Mining",
-    "Pharmaceutical",
-    "Telecommunication",
-    "Transportation",
+  // List of Education levels (Hard Coded)
+  const education = [
+    "No formal education",
+    "Primary education",
+    "Secondary education",
+    "GED",
+    "Vocational qualification",
+    "Bachelor's degree",
+    "Master's degree",
+    "Doctorate or higher",
   ];
   return (
-    <FormControl as={GridItem} colSpan={[6, 3]}>
-      {/* First Name Input */}
-      <FormLabel
-        htmlFor="first_name"
-        fontSize="sm"
-        fontWeight="md"
-        color={useColorModeValue("gray.700", "gray.50")}
-      >
-        {"Industry"}
-      </FormLabel>
-
-      {/* Given name Input */}
-      <Select
-        value={value?.length === 0 ? industries[0] : value}
-        onChange={(event) => onSelect(event.target.value)}
-        placeholder="Select industry"
-        name="industry"
-        id="industry"
-      >
-        {industries.map((industry: string) => (
-          <option key={industry}>{industry}</option>
-        ))}
-      </Select>
-    </FormControl>
+    // Returns a list of education
+    <Select
+      name="education"
+      id="education"
+      placeholder="Select education"
+      onChange={(event) => onSelect(event.target.value)}
+      value={value.length === 0 ? education[0] : value}
+    >
+      {education.map((education: string) => (
+        <option key={education}>{education}</option>
+      ))}
+    </Select>
   );
 };
 
-export default WorkExperienceView;
+export default EducationExperienceView;
