@@ -148,12 +148,12 @@ function App() {
           <Tabs
             onChange={(e) => setSection(e + 1)}
             variant="soft-rounded"
-            colorScheme="teal"
+            colorScheme="blue"
           >
             <TabList paddingLeft={5}>
-              <Tab>Tab 1</Tab>
-              <Tab>Tab 2</Tab>
-              <Tab>Tab 3</Tab>
+              <Tab>Personal</Tab>
+              <Tab>Work</Tab>
+              <Tab>Education</Tab>
             </TabList>
             <TabPanels>
               <TabPanel>
