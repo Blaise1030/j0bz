@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import "./App.css";
+
 import {
   Box,
   ChakraProvider,
@@ -18,6 +19,7 @@ import { CheckIcon, WarningIcon, InfoOutlineIcon } from "@chakra-ui/icons";
 import WorkExperienceForm from "./Components/WorkExperienceForm";
 import PersonalInformation from "./Components/PersonalInformation";
 import EducationExperienceForm from "./Components/EducationExperienceForm";
+import ApplicationStatus from "./Components/ApplicationStatus";
 
 function App() {
   const [section, setSection] = useState(1);
@@ -141,7 +143,10 @@ function App() {
                 {confirm === 0 && (
                   <>
                     <Button
-                      onClick={() => setConfirm(2)}
+                      onClick={() => {
+                        setConfirm(2);
+                        setTimeout(() => setConfirm(3), 1500);
+                      }}
                       colorScheme="teal"
                       variant="outline"
                       size="lg"
@@ -163,6 +168,27 @@ function App() {
             </VStack>
           </Box>
         )}
+        {confirm === 3 && (
+          <Box
+            pos={"absolute"}
+            top={0}
+            left={0}
+            width={"100%"}
+            height={"100%"}
+            bg={"white"}
+            zIndex={2}
+          >
+            <VStack
+              justifyContent={"start"}
+              alignItems={"center"}
+              h={"100%"}
+              overflowY={"auto"}
+              paddingTop={2}
+            >
+              <ApplicationStatus companyName={query} />
+            </VStack>
+          </Box>
+        )}
         <Box w="100%" h="100%" rounded={10} paddingTop={4} overflowY={"auto"}>
           <Tabs
             onChange={(e) => {
@@ -176,6 +202,7 @@ function App() {
               <Tab>Personal</Tab>
               <Tab>Work</Tab>
               <Tab>Education</Tab>
+              <Tab>Application</Tab>
             </TabList>
             <TabPanels>
               <TabPanel>
@@ -195,6 +222,9 @@ function App() {
                   experience={educationExperience}
                   setExperience={setEducationExperience}
                 />
+              </TabPanel>
+              <TabPanel>
+                <ApplicationStatus companyName={query} />
               </TabPanel>
             </TabPanels>
           </Tabs>
