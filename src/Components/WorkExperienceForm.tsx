@@ -7,6 +7,8 @@ import {
   Button,
   VStack,
   Select,
+  HStack,
+  Heading,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { SmallAddIcon, ChevronDownIcon } from "@chakra-ui/icons";
@@ -82,7 +84,14 @@ const WorkExperienceForm = ({
   };
 
   return (
-    <SimpleGrid columns={6} spacing={6} p={3}>
+    <SimpleGrid
+      bg="white"
+      shadow={"sm"}
+      rounded={5}
+      columns={6}
+      spacing={6}
+      p={3}
+    >
       <TextInput
         onChange={(change) => updateField("jobTitle", change)}
         value={value.jobTitle}
@@ -130,7 +139,6 @@ const WorkExperienceView = ({
   experience: WorkExperience[];
   setExperience: (n: WorkExperience[]) => void;
 }) => {
-  console.log("now", experience);
   // Event Handler that handles event when user adds an experience
   const onAddExperienceClick = () =>
     setExperience([
@@ -154,9 +162,26 @@ const WorkExperienceView = ({
 
   return (
     <VStack alignItems={"start"} justifyContent={"start"}>
-      <Button onClick={onAddExperienceClick}>
-        <SmallAddIcon w={30} h={30} /> <span>Add New Experience</span>
-      </Button>
+      <HStack
+        justifyContent={"space-between"}
+        alignItems={"center"}
+        paddingLeft={4}
+        w="100%"
+      >
+        <Heading fontSize="lg" fontWeight="medium" lineHeight="6">
+          Experiences
+        </Heading>
+        <Button
+          onClick={onAddExperienceClick}
+          marginLeft={"auto"}
+          padding={0}
+          bg={"transparent"}
+          rounded={"full"}
+        >
+          <SmallAddIcon w={8} h={8} />
+        </Button>
+      </HStack>
+
       {experience?.map((value, index) => (
         <WorkExperienceForm
           updateStore={onSetExperience}

@@ -7,6 +7,11 @@ import {
   HStack,
   Progress,
   Center,
+  Tabs,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
 } from "@chakra-ui/react";
 import { Button } from "@chakra-ui/react";
 import WorkExperienceForm from "./Components/WorkExperienceForm";
@@ -105,7 +110,7 @@ function App() {
   return (
     <ChakraProvider>
       <div className="App">
-        <Box w="100%">
+        <Box w="100%" rounded={10}>
           <HStack spacing="10px" width="100%">
             <Progress
               width="75%"
@@ -118,37 +123,31 @@ function App() {
               Save this thing
             </Button>
           </HStack>
-          {section === 1 && (
-            <PersonalInformation
-              currentState={basicInformation}
-              setState={setBasicInformation}
-            />
-          )}
-          {section === 2 && (
-            <WorkExperienceForm
-              experience={workExperience}
-              setExperience={setWorkExperience}
-            />
-          )}
-          <Center width="100%">
-            {section !== 1 && (
-              <Button
-                colorScheme="teal"
-                onClick={() => setSection(section - 1)}
-                width="40%"
-                mr={8}
-              >
-                Previous
-              </Button>
-            )}
-            <Button
-              colorScheme="teal"
-              onClick={() => setSection(section + 1)}
-              width="40%"
-            >
-              Next
-            </Button>
-          </Center>
+
+          <Tabs
+            onChange={(e) => setSection(e + 1)}
+            variant="soft-rounded"
+            colorScheme="teal"
+          >
+            <TabList paddingLeft={5}>
+              <Tab>Tab 1</Tab>
+              <Tab>Tab 2</Tab>
+            </TabList>
+            <TabPanels>
+              <TabPanel>
+                <PersonalInformation
+                  currentState={basicInformation}
+                  setState={setBasicInformation}
+                />
+              </TabPanel>
+              <TabPanel>
+                <WorkExperienceForm
+                  experience={workExperience}
+                  setExperience={setWorkExperience}
+                />
+              </TabPanel>
+            </TabPanels>
+          </Tabs>
         </Box>
       </div>
     </ChakraProvider>
