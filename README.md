@@ -62,7 +62,7 @@ In order to fullfill this goal, we planned to introduce job application insights
 <br>
 
 ## Team Members
-- Min Hao
-- Blaise Tiong
-- Wei Chun
-- Jun Hoe
+- Chee Min Hao
+- Blaise Tiong Zhao Xiong
+- Tan Wei Chun
+- San Jun Hoe
