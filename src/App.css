@@ -1,7 +1,12 @@
 .App {
+  width: 500px;
+  height: 700px;
+  margin: auto;
   background: white;
   padding: 0.5rem;
-  border: 0.5px solid #eeeeee;
+  border: 0.5px solid #d0d0d0;
+  border-radius: 5px;
+  position: relative;
 }
 
 .SEOForm {

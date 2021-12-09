@@ -1,5 +1,5 @@
 import { useColorModeValue } from "@chakra-ui/color-mode";
-import { SimpleGrid, GridItem, Box } from "@chakra-ui/layout";
+import { SimpleGrid, GridItem } from "@chakra-ui/layout";
 import {
   FormControl,
   FormLabel,
@@ -10,8 +10,7 @@ import {
   HStack,
   Heading,
 } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
-import { SmallAddIcon, ChevronDownIcon } from "@chakra-ui/icons";
+import { SmallAddIcon } from "@chakra-ui/icons";
 
 // ----------------------------------------------------------------------------------------------------------------------
 

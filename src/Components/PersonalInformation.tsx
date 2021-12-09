@@ -8,12 +8,10 @@ import {
   SimpleGrid,
   Stack,
   useColorModeValue,
-  Text,
-  Button,
   Select,
 } from "@chakra-ui/react";
 
-export default function ({ setState, currentState }: any) {
+export default function WorkExperienceForm({ setState, currentState }: any) {
   return (
     <>
       <Box px={4} rounded={10}>
@@ -256,19 +254,6 @@ export default function ({ setState, currentState }: any) {
           </FormControl>
         </SimpleGrid>
       </Stack>
-      <Box
-        px={{ base: 4, sm: 6 }}
-        bg={useColorModeValue("gray.50", "gray.900")}
-      >
-        <Button
-          type="submit"
-          colorScheme="brand"
-          _focus={{ shadow: "" }}
-          fontWeight="md"
-        >
-          Save
-        </Button>
-      </Box>
     </>
   );
 }

@@ -1,51 +1,30 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
-import { DOMMessage, DOMMessageResponse } from "./types";
 import {
   Box,
   ChakraProvider,
-  HStack,
-  Progress,
-  Center,
   Tabs,
   Tab,
   TabList,
   TabPanel,
+  Text,
   TabPanels,
+  VStack,
+  HStack,
+  Button,
 } from "@chakra-ui/react";
-import { Button } from "@chakra-ui/react";
+import { CheckIcon, WarningIcon, InfoOutlineIcon } from "@chakra-ui/icons";
+
 import WorkExperienceForm from "./Components/WorkExperienceForm";
 import PersonalInformation from "./Components/PersonalInformation";
 import EducationExperienceForm from "./Components/EducationExperienceForm";
 
 function App() {
-  const [headlines, setHeadlines] = React.useState<string[]>([]);
   const [section, setSection] = useState(1);
   const [basicInformation, setBasicInformation] = useState({});
   const [workExperience, setWorkExperience] = useState<any>([]);
   const [educationExperience, setEducationExperience] = useState<any>([]);
   const isDev = true;
-  useEffect(() => {
-    // run on every 1 s
-    setInterval(() => {
-      chrome.tabs &&
-        chrome.tabs.query(
-          {
-            active: true,
-            currentWindow: true,
-          },
-          (tabs) => {
-            chrome.tabs.sendMessage(
-              tabs[0].id || 0,
-              { type: "GET_DOM" } as DOMMessage,
-              (response: DOMMessageResponse) => {
-                setHeadlines(response.headlines);
-              }
-            );
-          }
-        );
-    }, 1000);
-  }, []);
 
   const saveCurrent = () => {
     const saveIntoLocalStorage = (category: string, toStore: object) => {
@@ -69,7 +48,7 @@ function App() {
         isDev
           ? saveIntoLocalStorage("educationExperience", educationExperience)
           : saveIntoChromeStorage("educationExperience", educationExperience);
-          break;
+        break;
       default:
         break;
     }
@@ -83,7 +62,6 @@ function App() {
           ? JSON.parse(localStored)
           : {}
         : await chrome.storage.sync.get([category]);
-      console.log(storedState, "Retreive");
       if (category === "personalInformation")
         setBasicInformation(
           isDev ? storedState : storedState.personalInformation
@@ -126,27 +104,71 @@ function App() {
       default:
         break;
     }
-  }, [section]);
+  }, [section, isDev]);
 
+  const [query, setQuery] = useState("");
+  useEffect(() => {
+    setQuery(window.location.search.substring(1).split("=")[1]);
+  }, []);
+
+  const [confirm, setConfirm] = useState<number>(0);
   return (
     <ChakraProvider>
       <div className="App">
-        <Box w="100%" rounded={10}>
-          <HStack spacing="10px" width="100%">
-            <Progress
-              width="75%"
-              size="sm"
-              borderRadius="4"
-              value={parseInt(((section / 2) * 100).toString())}
-              my={4}
-            />
-            <Button colorScheme="red" onClick={saveCurrent} width="25%">
-              Save this thing
-            </Button>
-          </HStack>
-
+        {query && (
+          <Box
+            pos={"absolute"}
+            top={0}
+            left={0}
+            width={"100%"}
+            height={"100%"}
+            bg={"white"}
+            zIndex={2}
+          >
+            <VStack justifyContent={"center"} alignItems={"center"} h={"100%"}>
+              {confirm === 2 && <CheckIcon w={32} h={32} color="green.500" />}
+              {confirm === 1 && <WarningIcon w={32} h={32} color="red.500" />}
+              {confirm === 0 && (
+                <InfoOutlineIcon w={32} h={32} color="blue.500" />
+              )}
+              <Text fontSize="xl" color="gray.500" align="center" p="5">
+                {confirm === 0 &&
+                  `Are you sure you want to send your appliction data to ${query} ?`}
+                {confirm === 1 && `Application canceled`}
+                {confirm === 2 && `Application successfully sent to ${query}`}
+              </Text>
+              <HStack spacing={4} w="100%" justifyContent="center" height={10}>
+                {confirm === 0 && (
+                  <>
+                    <Button
+                      onClick={() => setConfirm(2)}
+                      colorScheme="teal"
+                      variant="outline"
+                      size="lg"
+                      w={"40%"}
+                    >
+                      Confirm
+                    </Button>
+                    <Button
+                      onClick={() => setConfirm(1)}
+                      colorScheme="red"
+                      size="lg"
+                      w={"40%"}
+                    >
+                      Cancel
+                    </Button>
+                  </>
+                )}
+              </HStack>
+            </VStack>
+          </Box>
+        )}
+        <Box w="100%" h="100%" rounded={10} paddingTop={4} overflowY={"auto"}>
           <Tabs
-            onChange={(e) => setSection(e + 1)}
+            onChange={(e) => {
+              saveCurrent();
+              setSection(e + 1);
+            }}
             variant="soft-rounded"
             colorScheme="blue"
           >

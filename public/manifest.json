@@ -3,6 +3,9 @@
   "description": "The power of React and TypeScript for building interactive Chrome extensions",
   "version": "1.0",
   "manifest_version": 3,
+  "background": {
+    "service_worker": "./wrapper.js"
+  },
   "action": {
     "default_popup": "index.html",
     "default_title": "Open the popup"
@@ -13,10 +16,7 @@
       "js": ["./static/js/content.js"]
     }
   ],
-  "permissions": [
-    "activeTab",
-    "storage"
-  ],
+  "permissions": ["activeTab", "storage"],
   "icons": {
     "16": "logo192.png",
     "48": "logo192.png",
