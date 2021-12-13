@@ -3,6 +3,7 @@ import "./App.css";
 
 import {
   Box,
+  Button,
   ChakraProvider,
   Tabs,
   Tab,
@@ -12,14 +13,18 @@ import {
   TabPanels,
   VStack,
   HStack,
-  Button,
 } from "@chakra-ui/react";
 import { CheckIcon, WarningIcon, InfoOutlineIcon } from "@chakra-ui/icons";
-
 import WorkExperienceForm from "./Components/WorkExperienceForm";
 import PersonalInformation from "./Components/PersonalInformation";
 import EducationExperienceForm from "./Components/EducationExperienceForm";
 import ApplicationStatus from "./Components/ApplicationStatus";
+import {
+  generateUniqueLink,
+  checkIfAdmin,
+  addProfileToUniqueLink,
+  storeJobDescription,
+} from "./db/services";
 
 function App() {
   const [section, setSection] = useState(1);
@@ -117,6 +122,41 @@ function App() {
   return (
     <ChakraProvider>
       <div className="App">
+        <Button
+          onClick={async () => {
+            const haha = await generateUniqueLink(
+              { some: "this is new" },
+              "secret2"
+            );
+            console.log(haha);
+          }}
+        >
+          Click me to the moon
+        </Button>
+
+        <Button
+          onClick={async () => {
+            const haha = await checkIfAdmin(
+              "bf54cb6a-fddf-4865-a7e6-a6a1725bdcaa",
+              "8834bf7254d132c944a26feb2e8e82129f6a3275",
+              "ee03115968d48346e2b364c5302629886c1e6c8b"
+            );
+            console.log("Im admin", haha);
+          }}
+        >
+          Click me to the check admin
+        </Button>
+        <Button
+          onClick={async () => {
+            const haha = await addProfileToUniqueLink(
+              { name: "ali", age: 10 },
+              "ee03115968d48346e2b364c5302629886c1e6c8b"
+            );
+            console.log("profile created", haha);
+          }}
+        >
+          Click me to the check profile
+        </Button>
         {query && (
           <Box
             pos={"absolute"}
