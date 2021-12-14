@@ -11,8 +11,7 @@ import {
   Heading,
 } from "@chakra-ui/react";
 import { SmallAddIcon } from "@chakra-ui/icons";
-
-// ----------------------------------------------------------------------------------------------------------------------
+import TextInput from "./TextInput";
 
 // Declare Work Experience type
 export type EducationExperience = {
@@ -23,52 +22,6 @@ export type EducationExperience = {
   startDate: string;
   endDate: string;
   course: string;
-};
-
-// Form UI which includes all text based input components
-const TextInput = ({
-  title,
-  type,
-  value,
-  onChange,
-}: {
-  onChange: (a: string) => void;
-  title: string;
-  type: string;
-  value: string;
-}) => {
-  return (
-    <>
-      <FormControl as={GridItem} colSpan={[6, 3]}>
-        {/* First Name Input */}
-        <FormLabel
-          htmlFor="first_name"
-          fontSize="sm"
-          fontWeight="md"
-          color={useColorModeValue("gray.700", "gray.50")}
-        >
-          {title}
-        </FormLabel>
-
-        {/* Given name Input */}
-        <Input
-          onChange={(e) => {
-            console.log(e);
-            onChange(e.target.value);
-          }}
-          value={value}
-          type={type}
-          autoComplete="given-name"
-          mt={1}
-          focusBorderColor="brand.400"
-          shadow="sm"
-          size="sm"
-          w="full"
-          rounded="md"
-        />
-      </FormControl>
-    </>
-  );
 };
 
 const EducationExperienceForm = ({

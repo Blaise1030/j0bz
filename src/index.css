@@ -18,22 +18,21 @@ code {
     monospace;
 }
 
-/* width */
-::-webkit-scrollbar {
+/* width ::-webkit-scrollbar {
   width: 10px;
-}
+} */
 
-/* Track */
+/* Track
 ::-webkit-scrollbar-track {
   background: #f1f1f1;
-}
+} */
 
 /* Handle */
-::-webkit-scrollbar-thumb {
+/* ::-webkit-scrollbar-thumb {
   background: #bebebe;
-}
+} */
 
 /* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
+/* ::-webkit-scrollbar-thumb:hover {
   background: #bebebe;
-}
+} */

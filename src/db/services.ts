@@ -1,9 +1,11 @@
 import { db } from "../firebase";
 import { v4 as uuidv4 } from "uuid";
 
-const hash = require("object-hash");
+export const hash = require("object-hash");
 
 const domainName = "https://j0bz.vercel.app";
+const JOBS_RECRUITER = "jobs-recruiter";
+const JOBS_APPLICANTS = "job-applicants";
 
 export const generateUniqueLink = async (jobPayload, secret) => {
   const u = uuidv4();
@@ -20,9 +22,11 @@ export const generateUniqueLink = async (jobPayload, secret) => {
   return response;
 };
 
-export const checkIfAdmin = (u, hashedSecret, databaseID) => {
-  console.log(hashedSecret, u);
-  console.log(hash(`${u}${hashedSecret}`));
+export const checkIfAdmin = (
+  u: string,
+  hashedSecret: string,
+  databaseID: string
+) => {
   return hash(`${u}${hashedSecret}`) === databaseID ? true : false;
 };
 
@@ -37,30 +41,44 @@ export const addProfileToUniqueLink = async (profile, databaseID) => {
 };
 
 export const storeJobDescription = async (databaseID: string, payload: any) => {
-  await db.collection("jobs-recruiter").doc(databaseID).set(payload);
+  await db.collection(JOBS_RECRUITER).doc(databaseID).set(payload);
 };
 
-// recrutier -> generate 1 link with UUID (both use same link to read and store) -for future (we will add authorization for recuriter to see evrerything)
+export const checkIdExists = async (databaseID: string) => {
+  const idExist = (await db.collection(JOBS_RECRUITER).doc(databaseID).get())
+    .exists;
+  return idExist;
+};
 
-// recruiter -> generate 2 links with both keyA and keyB - give recruiter 1 link with key
-// give recuritee 1 link with both key B and keyA
-// when he submit - we sha256 keyA with our own secret then store
+export const getJobDescription = async (databaseID: string) => {
+  try {
+    const response = await db.collection(JOBS_RECRUITER).doc(databaseID).get();
+    if (!response.exists) {
+      throw "job id does not exist";
+    } else return response.data();
+  } catch (error) {
+    throw error;
+  }
+};
 
-// link/<key>(<access><databasekey>)
-// jobseeker = link/<dbKey> - can store
-// recruiter = link/key=<dbKey>isAdmin=<readAllToken>
+export const getAllJobApplicants = async (databaseID: string) => {
+  let documents = [];
+  try {
+    const idExist = await checkIdExists(databaseID);
 
-// // {
-// //   unique: {
-// //     'u1': {
-// //       'sadsadsadsa': 'profile1',
-// //       'dsadsad': 'profile1',
-// //       'sadsadsa': 'profile1',
-// //     },
-// //     'u2': {
-// //       'sadsadsadsa': 'profile1',
-// //       'dsadsad': 'profile1',
-// //       'sadsadsa': 'profile1',
-// //     }
-// //   }
-// // }
+    if (!idExist) {
+      throw "recruiter id does not exist";
+    } else {
+      const response = await db
+        .collection(JOBS_APPLICANTS)
+        .where("jobsRecruiter", "==", databaseID)
+        .get();
+      response.forEach((doc) => {
+        documents.push(doc.data());
+      });
+    }
+  } catch (error) {
+    throw error;
+  }
+  return documents;
+};

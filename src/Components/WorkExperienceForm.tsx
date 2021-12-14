@@ -3,7 +3,6 @@ import { SimpleGrid, GridItem } from "@chakra-ui/layout";
 import {
   FormControl,
   FormLabel,
-  Input,
   Button,
   VStack,
   Select,
@@ -11,6 +10,7 @@ import {
   Heading,
 } from "@chakra-ui/react";
 import { SmallAddIcon } from "@chakra-ui/icons";
+import TextInput from "./TextInput";
 
 // ----------------------------------------------------------------------------------------------------------------------
 
@@ -23,52 +23,6 @@ export type WorkExperience = {
   startDate: string;
   endDate: string;
   industry: string;
-};
-
-// Form UI which includes all text based input components
-const TextInput = ({
-  title,
-  type,
-  value,
-  onChange,
-}: {
-  onChange: (a: string) => void;
-  title: string;
-  type: string;
-  value: string;
-}) => {
-  return (
-    <>
-      <FormControl as={GridItem} colSpan={[6, 3]}>
-        {/* First Name Input */}
-        <FormLabel
-          htmlFor="first_name"
-          fontSize="sm"
-          fontWeight="md"
-          color={useColorModeValue("gray.700", "gray.50")}
-        >
-          {title}
-        </FormLabel>
-
-        {/* Given name Input */}
-        <Input
-          onChange={(e) => {
-            console.log(e);
-            onChange(e.target.value);
-          }}
-          value={value}
-          type={type}
-          autoComplete="given-name"
-          mt={1}
-          focusBorderColor="brand.400"
-          shadow="sm"
-          size="sm"
-          w="full"
-          rounded="md"
-        />
-      </FormControl>
-    </>
-  );
 };
 
 const WorkExperienceForm = ({
