@@ -14,19 +14,13 @@ import {
   Center,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import {
-  generateUniqueLink,
-  addProfileToUniqueLink,
-  checkIdExists,
-  getJobDescription,
-} from "../db/services";
-import { useParams, useNavigate } from "react-router-dom";
+import { addProfileToUniqueLink, getJobDescription } from "../db/services";
+import { useParams } from "react-router-dom";
 
 const JobApplicationConfirm = () => {
   const [confirm, setConfirm] = useState<number>(0);
   const [loading, setLoading] = useState(false);
   const [jobData, setJobData] = useState<any>({});
-  let navigate = useNavigate();
   const { id } = useParams();
   const psd = id.split("-").pop();
 
@@ -41,7 +35,7 @@ const JobApplicationConfirm = () => {
     };
 
     checkDatabase();
-  }, []);
+  }, [psd]);
 
   const onConfirm = async () => {
     setLoading(true);
@@ -56,7 +50,6 @@ const JobApplicationConfirm = () => {
         }
       }
     );
-    console.log(userData, "asdsadsadsadsa");
     await addProfileToUniqueLink(userData, psd);
     setLoading(false);
     setConfirm(2);
@@ -64,7 +57,7 @@ const JobApplicationConfirm = () => {
 
   return (
     <Box width={"100%"} height={"100%"} bg={"white"}>
-      {confirm != 3 && Object.keys(jobData).length === 0 ? (
+      {confirm !== 3 && Object.keys(jobData).length === 0 ? (
         <Center w="100%" h="100%">
           <Spinner size="xl" color="teal" thickness="2px" />
         </Center>

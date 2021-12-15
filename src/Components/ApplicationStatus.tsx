@@ -11,6 +11,7 @@ export default function ApplicationStatus({ companyName }: any) {
           rounded={"10"}
           shadow={"md"}
           width={"98%"}
+          borderWidth={0.5}
           p={3}
           mb={2}
         >

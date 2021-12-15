@@ -38,6 +38,8 @@ const WorkExperienceForm = ({
 
   return (
     <SimpleGrid
+      borderWidth={0.5}
+      borderColor={"#d0d0d0"}
       bg="white"
       shadow={"sm"}
       rounded={5}

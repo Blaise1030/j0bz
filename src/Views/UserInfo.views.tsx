@@ -1,32 +1,14 @@
-import { CheckIcon, WarningIcon, InfoOutlineIcon } from "@chakra-ui/icons";
-import {
-  Button,
-  Box,
-  VStack,
-  HStack,
-  Tabs,
-  TabList,
-  Tab,
-  TabPanels,
-  TabPanel,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Tabs, TabList, Tab, TabPanels, TabPanel } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import ApplicationStatus from "../Components/ApplicationStatus";
 import EducationExperienceForm from "../Components/EducationExperienceForm";
 import PersonalInformation from "../Components/PersonalInformation";
 import WorkExperienceForm from "../Components/WorkExperienceForm";
-import {
-  generateUniqueLink,
-  checkIfAdmin,
-  addProfileToUniqueLink,
-} from "../db/services";
 
 const UserInfo = () => {
   const [section, setSection] = useState(1);
   const [basicInformation, setBasicInformation] = useState({});
   const [workExperience, setWorkExperience] = useState<any>([]);
-  const [confirm, setConfirm] = useState<number>(0);
   const [educationExperience, setEducationExperience] = useState<any>([]);
   const isDev = true;
 
@@ -117,78 +99,6 @@ const UserInfo = () => {
 
   return (
     <div>
-      {query && (
-        <Box
-          pos={"absolute"}
-          top={0}
-          left={0}
-          width={"100%"}
-          height={"100%"}
-          bg={"white"}
-          zIndex={2}
-        >
-          <VStack justifyContent={"center"} alignItems={"center"} h={"100%"}>
-            {confirm === 2 && <CheckIcon w={32} h={32} color="green.500" />}
-            {confirm === 1 && <WarningIcon w={32} h={32} color="red.500" />}
-            {confirm === 0 && (
-              <InfoOutlineIcon w={32} h={32} color="blue.500" />
-            )}
-            <Text fontSize="xl" color="gray.500" align="center" p="5">
-              {confirm === 0 &&
-                `Are you sure you want to send your appliction data to ${query} ?`}
-              {confirm === 1 && `Application canceled`}
-              {confirm === 2 && `Application successfully sent to ${query}`}
-            </Text>
-            <HStack spacing={4} w="100%" justifyContent="center" height={10}>
-              {confirm === 0 && (
-                <>
-                  <Button
-                    onClick={() => {
-                      setConfirm(2);
-                      setTimeout(() => setConfirm(3), 1500);
-                    }}
-                    colorScheme="teal"
-                    variant="outline"
-                    size="lg"
-                    w={"40%"}
-                  >
-                    Confirm
-                  </Button>
-                  <Button
-                    onClick={() => setConfirm(1)}
-                    colorScheme="red"
-                    size="lg"
-                    w={"40%"}
-                  >
-                    Cancel
-                  </Button>
-                </>
-              )}
-            </HStack>
-          </VStack>
-        </Box>
-      )}
-      {confirm === 3 && (
-        <Box
-          pos={"absolute"}
-          top={0}
-          left={0}
-          width={"100%"}
-          height={"100%"}
-          bg={"white"}
-          zIndex={2}
-        >
-          <VStack
-            justifyContent={"start"}
-            alignItems={"center"}
-            h={"100%"}
-            overflowY={"auto"}
-            paddingTop={2}
-          >
-            <ApplicationStatus companyName={query} />
-          </VStack>
-        </Box>
-      )}
       <Box w="100%" h="100%" rounded={10} paddingTop={4} overflowY={"auto"}>
         <Tabs
           onChange={(e) => {

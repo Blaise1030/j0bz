@@ -3,7 +3,6 @@ import { SimpleGrid, GridItem } from "@chakra-ui/layout";
 import {
   FormControl,
   FormLabel,
-  Input,
   Button,
   VStack,
   Select,
@@ -37,9 +36,11 @@ const EducationExperienceForm = ({
 
   return (
     <SimpleGrid
+      borderWidth={0.5}
+      borderColor={"#d0d0d0"}
       bg="white"
       shadow={"sm"}
-      rounded={5}
+      rounded={7}
       columns={6}
       spacing={6}
       p={3}
@@ -165,18 +166,6 @@ const EducationDropdown = ({
     "Doctorate or higher",
   ];
   return (
-    // Returns a list of education
-    // <Select
-    //   name="education"
-    //   id="education"
-    //   field="Select education"
-    //   onChange={(event) => onSelect(event.target.value)}
-    //   value={value.length === 0 ? education[0] : value}
-    // >
-    //   {education.map((education: string) => (
-    //     <option key={education}>{education}</option>
-    //   ))}
-    // </Select>
     <FormControl as={GridItem} colSpan={[6, 3]}>
       {/* First Name Input */}
       <FormLabel

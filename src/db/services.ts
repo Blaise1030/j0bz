@@ -13,7 +13,11 @@ export const generateUniqueLink = async (jobPayload, secret) => {
   const databaseID = hash(`${u}${hashedSecret}`);
   const userLink = `${domainName}/user/${u}-${databaseID}`; //this one can be public
   const recruiterLink = `${domainName}/recruiter/${u}-${hashedSecret}`; //this one must be private
-  await storeJobDescription(databaseID, jobPayload);
+  await storeJobDescription(databaseID, {
+    userLink,
+    ...jobPayload,
+    applicationStateID: 0,
+  });
 
   const response = {
     userLink,
@@ -54,7 +58,7 @@ export const getJobDescription = async (databaseID: string) => {
   try {
     const response = await db.collection(JOBS_RECRUITER).doc(databaseID).get();
     if (!response.exists) {
-      throw "job id does not exist";
+      throw new Error("job id does not exist");
     } else return response.data();
   } catch (error) {
     throw error;
@@ -67,7 +71,7 @@ export const getAllJobApplicants = async (databaseID: string) => {
     const idExist = await checkIdExists(databaseID);
 
     if (!idExist) {
-      throw "recruiter id does not exist";
+      throw new Error("recruiter id does not exist");
     } else {
       const response = await db
         .collection(JOBS_APPLICANTS)
