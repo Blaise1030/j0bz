@@ -68,7 +68,7 @@ const WorkExperienceCard = ({
         { label: "Location", value: location },
       ].map(({ label, value }) => {
         return (
-          <GridItem colSpan={2} paddingBottom={2}>
+          <GridItem colSpan={2} paddingBottom={2} key={label}>
             <Text fontSize={"xs"} textColor={"gray.500"} paddingBottom={0}>
               {label}
             </Text>
@@ -83,7 +83,7 @@ const WorkExperienceCard = ({
 };
 
 const EducationCard = ({
-  education: { location, university, startDate, course, endDate },
+  education: { field, location, institution, startDate, course, endDate },
 }: {
   education: any;
 }) => {
@@ -99,14 +99,15 @@ const EducationCard = ({
       templateColumns="repeat(4, 1fr)"
     >
       {[
-        { label: "University", value: university },
+        { label: "Institution", value: institution },
+        { label: "Field of Study", value: field },
         { label: "Location", value: location },
         { label: "Start Date", value: startDate },
         { label: "End Date", value: endDate },
         { label: "Course", value: course },
       ].map(({ label, value }) => {
         return (
-          <GridItem colSpan={2} paddingBottom={2}>
+          <GridItem colSpan={2} paddingBottom={2} key={label}>
             <Text fontSize={"xs"} textColor={"gray.500"} paddingBottom={0}>
               {label}
             </Text>

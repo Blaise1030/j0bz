@@ -12,8 +12,8 @@ function App() {
     <div>
       <ChakraProvider>
         <Box
-          width={["100%", "500px"]}
-          height={["100%", "700px"]}
+          width={["100vw", "500px"]}
+          height={["100vh", "700px"]}
           overflowY={"auto"}
         >
           <BrowserRouter>
