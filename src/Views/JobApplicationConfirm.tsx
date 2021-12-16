@@ -49,7 +49,12 @@ const JobApplicationConfirm = () => {
     const checkLocalStorage = () => {
       const pInfo = localStorage.getItem("personalInformation");
       const hasInfo = pInfo && Object.keys(pInfo).length > 0;
-      if (!hasInfo) seeApplicantResume();
+      if (!hasInfo)
+        navigate("/user-info", {
+          state: {
+            applicationPath: location.pathname,
+          },
+        });
     };
 
     checkDatabase();
