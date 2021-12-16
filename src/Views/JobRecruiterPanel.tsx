@@ -102,6 +102,7 @@ const ApplicantCard = ({ applicantData }) => {
 
   return (
     <Box
+      cursor={"pointer"}
       borderRadius={10}
       borderWidth={1}
       width={"100%"}

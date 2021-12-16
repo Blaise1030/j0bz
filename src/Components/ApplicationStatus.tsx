@@ -4,6 +4,7 @@ import { getApplicantApplications } from "../db/services";
 import { v4 as uuidv4 } from "uuid";
 import { getJobDescription } from "../db/services";
 import ApplicationSteps from "./ApplicationSteps";
+import logo from "../assets/kitten.gif";
 
 export default function ApplicationStatus({ companyName }: any) {
   const [jobsAppliedTo, setJobsAppliedTo] = useState<any>([]);
@@ -40,6 +41,20 @@ export default function ApplicationStatus({ companyName }: any) {
         </Center>
       ) : (
         <>
+          {jobsAppliedTo?.length === 0 && (
+            <Center w="100%" h="100%">
+              <VStack>
+                <img
+                  style={{ borderRadius: "25px" }}
+                  src={logo}
+                  alt="loading..."
+                />
+                <Text fontWeight="700" pt={4}>
+                  No Application Found
+                </Text>
+              </VStack>
+            </Center>
+          )}
           {jobsAppliedTo.map(
             ({
               companyName,
