@@ -247,7 +247,7 @@ export default function WorkExperienceForm({ setState, currentState }: any) {
                 })
               }
             >
-              <option>Kuala Lumpur</option>
+              <option>Malaysia</option>
               <option>Singapore</option>
               <option>Indonesia</option>
             </Select>
