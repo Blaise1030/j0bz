@@ -46,7 +46,7 @@ const JobApplicationConfirm = () => {
 
     checkDatabase();
     checkLocalStorage();
-  }, [psd, navigate, location.pathname]);
+  }, [psd, navigate, location.pathname, seeApplicantResume]);
 
   const seeApplicantResume = () => {
     navigate("/user-info", {
