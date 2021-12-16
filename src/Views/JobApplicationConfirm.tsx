@@ -59,7 +59,7 @@ const JobApplicationConfirm = () => {
 
     checkDatabase();
     checkLocalStorage();
-  }, [psd, navigate, location.pathname, seeApplicantResume]);
+  }, [psd, navigate, location.pathname]);
 
   const onConfirm = async () => {
     setLoading(true);
