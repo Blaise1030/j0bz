@@ -28,6 +28,14 @@ const JobApplicationConfirm = () => {
   const { id } = useParams();
   const psd = id.split("-").pop();
 
+  const seeApplicantResume = () => {
+    navigate("/user-info", {
+      state: {
+        applicationPath: location.pathname,
+      },
+    });
+  };
+
   useEffect(() => {
     const checkDatabase = async () => {
       try {
@@ -47,14 +55,6 @@ const JobApplicationConfirm = () => {
     checkDatabase();
     checkLocalStorage();
   }, [psd, navigate, location.pathname, seeApplicantResume]);
-
-  const seeApplicantResume = () => {
-    navigate("/user-info", {
-      state: {
-        applicationPath: location.pathname,
-      },
-    });
-  };
 
   const onConfirm = async () => {
     setLoading(true);
