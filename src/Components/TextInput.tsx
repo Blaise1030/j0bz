@@ -35,10 +35,7 @@ const TextInput = ({
 
         {/* Given name Input */}
         <Input
-          onChange={(e) => {
-            console.log(e);
-            onChange(e.target.value);
-          }}
+          onChange={(e) => onChange(e.target.value)}
           disabled={disable}
           value={value}
           type={type}

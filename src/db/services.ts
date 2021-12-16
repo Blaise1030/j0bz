@@ -16,7 +16,6 @@ export const generateUniqueLink = async (jobPayload, secret) => {
   await storeJobDescription(databaseID, {
     userLink,
     ...jobPayload,
-    applicationStateID: 0,
   });
 
   const response = {
@@ -34,14 +33,28 @@ export const checkIfAdmin = (
   return hash(`${u}${hashedSecret}`) === databaseID ? true : false;
 };
 
-export const addProfileToUniqueLink = async (profile, databaseID) => {
+export const addProfileToUniqueLink = async (
+  applicantID,
+  profile,
+  databaseID
+) => {
   return await db
-    .collection("job-applicants")
+    .collection(JOBS_APPLICANTS)
     .doc(`${Date.now()}${databaseID}`)
     .set({
+      applicationStatusID: 0,
+      applicantID,
       jobsRecruiter: databaseID,
       ...profile,
     });
+};
+
+export const getApplicantApplications = async (applicantID) => {
+  const response = await db
+    .collection(JOBS_APPLICANTS)
+    .where("applicantID", "==", applicantID)
+    .get();
+  return response.docs.map((doc) => doc.data());
 };
 
 export const storeJobDescription = async (databaseID: string, payload: any) => {

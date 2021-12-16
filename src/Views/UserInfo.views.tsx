@@ -1,16 +1,35 @@
-import { Box, Tabs, TabList, Tab, TabPanels, TabPanel } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import {
+  Box,
+  Tabs,
+  TabList,
+  Tab,
+  TabPanels,
+  TabPanel,
+  Button,
+} from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 import ApplicationStatus from "../Components/ApplicationStatus";
 import EducationExperienceForm from "../Components/EducationExperienceForm";
 import PersonalInformation from "../Components/PersonalInformation";
 import WorkExperienceForm from "../Components/WorkExperienceForm";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const UserInfo = () => {
   const [section, setSection] = useState(1);
   const [basicInformation, setBasicInformation] = useState({});
   const [workExperience, setWorkExperience] = useState<any>([]);
   const [educationExperience, setEducationExperience] = useState<any>([]);
+  const [applicationPath, setApplicationPath] = useState<any>(null);
+  const location = useLocation();
+  const navigate = useNavigate();
+
   const isDev = true;
+
+  useEffect(() => {
+    setApplicationPath(location?.state?.applicationPath);
+  }, [location?.state?.applicationPath]);
+
+  const navigateToApplicationConfirm = () => navigate(applicationPath);
 
   const saveCurrent = () => {
     const saveIntoLocalStorage = (category: string, toStore: object) => {
@@ -98,48 +117,61 @@ const UserInfo = () => {
   }, []);
 
   return (
-    <div>
-      <Box w="100%" h="100%" rounded={10} paddingTop={4} overflowY={"auto"}>
-        <Tabs
-          onChange={(e) => {
-            saveCurrent();
-            setSection(e + 1);
-          }}
-          variant="soft-rounded"
-          colorScheme="blue"
+    <Box w="100%" h="100%" rounded={10} paddingTop={4} overflowY={"auto"}>
+      {applicationPath && (
+        <Button
+          onClick={navigateToApplicationConfirm}
+          colorScheme="teal"
+          outline={"none"}
+          variant="link"
+          size="lg"
+          pl={5}
+          my={5}
         >
-          <TabList paddingLeft={5}>
-            <Tab>Personal</Tab>
-            <Tab>Work</Tab>
-            <Tab>Education</Tab>
-            <Tab>Application</Tab>
-          </TabList>
-          <TabPanels>
-            <TabPanel>
-              <PersonalInformation
-                currentState={basicInformation}
-                setState={setBasicInformation}
-              />
-            </TabPanel>
-            <TabPanel>
-              <WorkExperienceForm
-                experience={workExperience}
-                setExperience={setWorkExperience}
-              />
-            </TabPanel>
-            <TabPanel>
-              <EducationExperienceForm
-                experience={educationExperience}
-                setExperience={setEducationExperience}
-              />
-            </TabPanel>
-            <TabPanel>
-              <ApplicationStatus companyName={query} />
-            </TabPanel>
-          </TabPanels>
-        </Tabs>
-      </Box>
-    </div>
+          ← Go Back to Application Page
+        </Button>
+      )}
+      <Tabs
+        onChange={(e) => {
+          saveCurrent();
+          setSection(e + 1);
+        }}
+        variant="soft-rounded"
+        colorScheme="blue"
+        w="100%"
+        h="100%"
+      >
+        <TabList pl={5}>
+          <Tab>Personal</Tab>
+          <Tab>Work</Tab>
+          <Tab>Education</Tab>
+          <Tab>Application</Tab>
+        </TabList>
+        <TabPanels w="100%" h="100%">
+          <TabPanel>
+            <PersonalInformation
+              currentState={basicInformation}
+              setState={setBasicInformation}
+            />
+          </TabPanel>
+          <TabPanel>
+            <WorkExperienceForm
+              experience={workExperience}
+              setExperience={setWorkExperience}
+            />
+          </TabPanel>
+          <TabPanel>
+            <EducationExperienceForm
+              experience={educationExperience}
+              setExperience={setEducationExperience}
+            />
+          </TabPanel>
+          <TabPanel w="100%" h="100%">
+            <ApplicationStatus companyName={query} />
+          </TabPanel>
+        </TabPanels>
+      </Tabs>
+    </Box>
   );
 };
 

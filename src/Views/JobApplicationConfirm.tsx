@@ -16,11 +16,15 @@ import {
 import { useEffect, useState } from "react";
 import { addProfileToUniqueLink, getJobDescription } from "../db/services";
 import { useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
 
 const JobApplicationConfirm = () => {
   const [confirm, setConfirm] = useState<number>(0);
   const [loading, setLoading] = useState(false);
   const [jobData, setJobData] = useState<any>({});
+  const navigate = useNavigate();
+  const location = useLocation();
   const { id } = useParams();
   const psd = id.split("-").pop();
 
@@ -34,8 +38,23 @@ const JobApplicationConfirm = () => {
       }
     };
 
+    const checkLocalStorage = () => {
+      const pInfo = localStorage.getItem("personalInformation");
+      const hasInfo = pInfo && Object.keys(pInfo).length > 0;
+      if (!hasInfo) seeApplicantResume();
+    };
+
     checkDatabase();
-  }, [psd]);
+    checkLocalStorage();
+  }, [psd, navigate, location.pathname]);
+
+  const seeApplicantResume = () => {
+    navigate("/user-info", {
+      state: {
+        applicationPath: location.pathname,
+      },
+    });
+  };
 
   const onConfirm = async () => {
     setLoading(true);
@@ -50,7 +69,12 @@ const JobApplicationConfirm = () => {
         }
       }
     );
-    await addProfileToUniqueLink(userData, psd);
+    let applicantID = localStorage.getItem("applicantID");
+    if (!applicantID) {
+      applicantID = uuidv4();
+      localStorage.setItem("applicantID", applicantID);
+    }
+    await addProfileToUniqueLink(applicantID, userData, psd);
     setLoading(false);
     setConfirm(2);
   };
@@ -99,6 +123,18 @@ const JobApplicationConfirm = () => {
               </>
             )}
           </HStack>
+          {confirm === 0 && (
+            <Box pt={5}>
+              <Button
+                onClick={seeApplicantResume}
+                colorScheme="teal"
+                variant="link"
+                size="lg"
+              >
+                Check My Application
+              </Button>
+            </Box>
+          )}
         </VStack>
       )}
     </Box>
